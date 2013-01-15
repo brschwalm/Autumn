@@ -1,0 +1,112 @@
+﻿<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="~/">Autumn Contact List</a></p>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Welcome to the Autmn Contact List!</h1>
+                <h2>This demonstrates the Autumn MVC Framework.</h2>
+            </hgroup>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>Here are your contacts:</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: Contacts">
+                <tr data-bind="visible: !isWorking()">                    
+                    <td>
+                        <div data-bind="visible: !isEditing()"><h5><a data-bind="attr: {href: '#/Contacts/' + id()}"><span data-bind="text: name"></span></a></h5></div>
+                        <input type="text" class="input-small span3" placeholder="Name" data-bind="value: name, visible: isEditing()" />
+                    </td>
+                    <td>
+                        <div data-bind="visible: !isEditing()"><span data-bind="text: age"></span></div>
+                        <input type="text" class="input-small span1" placeholder="Age" data-bind="value: age, visible: isEditing()" />
+                    </td>
+                    <td>
+                        <div data-bind="visible: !isEditing()"><a href="#mail" data-bind="attr: {href: 'mail-to:' + email()}"><span data-bind="text: email"></span></a></div>
+                        <input type="text" class="input-small span3" placeholder="Email" data-bind="value: email, visible: isEditing()" />
+
+                    </td>
+                    <td>
+                        <div data-bind="visible: !isEditing()">
+                            <button class="btn btn-mini" data-bind="click: $root.editContact">Edit</button>
+                            <button class="btn btn-mini" data-bind="click: $root.deleteContact">Delete</button>
+                        </div>
+                        <div data-bind="visible: isEditing()">
+                            <button class="btn btn-small btn-success" data-bind="click: $root.saveChanges">Save</button>
+                            <button class="btn btn-small btn-warning" data-bind="click: $root.cancelChanges">Cancel</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr data-bind="visible: isWorking()">
+                    <td colspan="4">
+                        <div data-bind="visible: isWorking" class="progress progress-striped active" style="width:45%">
+                            <div class="bar" style="width:100%"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div data-bind="visible: $root.isWorking" class="progress progress-striped active" style="width:45%">
+            <div class="bar" style="width:100%"></div>
+        </div>
+
+        <button class="btn btn-primary" data-bind="click: addContact, visible: !$root.isWorking()">Add New</button>
+
+        <div id="confirmModal" class="modal hide">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+                <h3 id="confirmHeader">Confirm Change</h3>
+            </div>
+            <div id="confirmBody" class="modal-body">
+                <p id="confirmBodyP">Body of message...</p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmCancelButton" class="btn">Cancel</button>
+                <button id="confirmContinueButton" class="btn btn-primary">Continue</button>
+            </div>
+        </div>
+
+    </section>
+</div>
+@section styles{
+    <link href="../../Content/bootstrap.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <script src="../../Scripts/jquery-1.7.1.js" type="text/javascript"></script>
+    <script src="../../Scripts/jquery-ui-1.8.20.min.js" type="text/javascript"></script>
+    <script src="../../Scripts/knockout-2.1.0.debug.js" type="text/javascript"></script>
+    <script src="../../Scripts/bootstrap.js" type="text/javascript"></script>
+    <script src="../../Scripts/example.js" type="text/javascript"></script>
+    <script src="../../Scripts/example.models.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        //Capture the url of the api controller
+        var API_URL = '@Url.HttpRouteUrl("DefaultApi", new {httproute = "", controller="Contacts"})';
+
+        var viewModel = new viewModel();
+
+        $(document).ready(function () {
+            viewModel.loadContacts(null);
+            ko.applyBindings(viewModel);
+        });
+
+    </script>
+}

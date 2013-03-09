@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Example.Domain
 {
@@ -47,5 +48,10 @@ namespace Example.Domain
                 this.Email = source.Email;
             }
         }
+
+		public override void Prepare()
+		{
+			if (this.Address == null) this.AddressId = null;
+		}
     }
 }

@@ -74,7 +74,7 @@ namespace Example.Web
             kernel.Bind<IModelRepository<Contact>>().To<ModelRepository<Contact>>().InRequestScope();
 
             //Services...
-            kernel.Bind<IContactsService>().To<ContactsService>().InRequestScope();
+			kernel.Bind<IAutumnService<Contact>>().To<ContactsService>().InRequestScope();
 
         }
     }

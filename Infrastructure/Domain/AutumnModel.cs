@@ -91,6 +91,14 @@ namespace Autumn.Mvc.Infrastructure.Domain
 		/// <param name="createdDate"></param>
 		protected virtual void InitializeChildren(DateTime createdDate, Guid? ownerId) { }
 
+		/// <summary>
+		/// 
+		/// </summary> 
+		public virtual void Prepare()
+		{
+
+		}
+
 		#region IValidatableObject Members
 
 		public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

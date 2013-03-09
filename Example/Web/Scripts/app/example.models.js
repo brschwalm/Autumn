@@ -14,7 +14,7 @@
     self.original = null;
 
     self.beginEdit = function () {
-        self.original = new contactModel(self.name, self.age, self.email);
+        self.original = new contactModel(self.name(), self.age(), self.email());
         self.isEditing(true);
     }
     self.commitEdit = function () {
@@ -23,9 +23,9 @@
         self.isWorking(false);
     }
     self.rollbackEdit = function () {
-        self.name = self.original.name;
-        self.age = self.original.age;
-        self.email = self.original.email;
+        self.name(self.original.name());
+        self.age(self.original.age());
+        self.email(self.original.email());
         self.original = null;
         self.isEditing(false);
         self.isWorking(false);
